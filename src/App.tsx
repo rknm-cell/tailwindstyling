@@ -12,7 +12,7 @@ type TaskData = {
 function App() {
   return (
     <>
-      <div>
+      <div className="bg-gray-100 h-dvw">
         <h1 className="text-5xl p-4">Task</h1>
         <TaskList />
       </div>
