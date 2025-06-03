@@ -20,10 +20,8 @@ const taskList: TaskData[] = [
 
 function TaskList() {
   const [tasks, setTasks] = useState(taskList);
-  console.log(tasks)
   const updateTasks = (id: number) => {
     const newTasks = tasks.map(task => ({...task}));
-    console.log('newTasks: ', newTasks)
     const taskToUpdate = newTasks.find(task => task.id === id)
     if (taskToUpdate){
       taskToUpdate.checked = !taskToUpdate.checked
