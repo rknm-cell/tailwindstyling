@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import Task from "./Task";
 
 type TaskData = {
@@ -7,19 +7,50 @@ type TaskData = {
   description: string;
   checked: boolean;
 };
-const tasks: TaskData[] = [
+const taskList: TaskData[] = [
   { id: 1, title: "Dishes", description: "Do the dishes", checked: false },
   { id: 2, title: "Kitchen", description: "Sweep the kitchen", checked: true },
-  { id: 3, title: "Put away dishes", description: "Sort dishes and put them away", checked: false},
+  {
+    id: 3,
+    title: "Put away dishes",
+    description: "Sort dishes and put them away",
+    checked: false,
+  },
 ];
 
 function TaskList() {
-//   {tasks.sort(function (x, y){ return (x === y) ? 0 : x ? -1 : 1}).map((task) => <Task id={task.id} title={task.title} description={task.description} checked={task.checked}/>)}
+  const [tasks, setTasks] = useState(taskList);
+  console.log(tasks)
+  const updateTasks = (id: number) => {
+    const newTasks = tasks.map(task => ({...task}));
+    console.log('newTasks: ', newTasks)
+    const taskToUpdate = newTasks.find(task => task.id === id)
+    if (taskToUpdate){
+      taskToUpdate.checked = !taskToUpdate.checked
+    }
+
+    setTasks(newTasks);
+  }
+
+  const sortTasks = (tasks: TaskData[]) => {
+    const sortedTasks = [...tasks].sort((a, b) => {
+      if (a.checked === b.checked) {
+        return 0;
+      }
+      return a.checked ? -1 : 1;
+    });
+    return sortedTasks;
+  };
   return (
     <div>
-      {/* <Task task={tasks} /> */}
-      {/* {tasks.sort(function (x, y){ return (x === y) ? 0 : x ? 1 : -1}).map((task) => <Task key={task.id} title={task.title} description={task.description} checked={task.checked}/>)} */}
-      {tasks.sort(function (x, y){ return (x === y) ? 0 : x ? -1 : 1}).map((task) => <Task key={task.id} title={task.title} description={task.description} checked={task.checked}/>)}
+      {sortTasks(tasks)
+        .map((task: TaskData) => (
+          <Task
+            updateCheck={updateTasks}
+            key={task.id}
+            taskData={task}
+          />
+        ))}
     </div>
   );
 }

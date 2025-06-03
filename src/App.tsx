@@ -2,7 +2,7 @@
 import TaskList from "./TaskList";
 import "./App.css";
 
-type TaskData = {
+export type TaskData = {
   id: number;
   title: string;
   description: string;
